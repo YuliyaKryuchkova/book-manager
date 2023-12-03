@@ -1,4 +1,19 @@
 from django.db import models
+from django.utils import timezone
+
+
+class Author(models.Model):
+    name = models.CharField(
+        max_length=150,
+        db_index=True
+    )
+
+    class Meta:
+        verbose_name = 'Автор'
+        verbose_name_plural = 'Авторы'
+
+    def __str__(self):
+        return self.name
 
 
 class Book(models.Model):
@@ -6,10 +21,12 @@ class Book(models.Model):
         'Название книги',
         max_length=150,
     )
-    author = models.ForeignKey(
-        'Author',
-        on_delete=models.SET_NULL,
-        null=True)
+    authors = models.ManyToManyField(
+        Author,
+        through='AuthorsBook',
+        related_name='books',
+        verbose_name='Авторы',
+    )
     publication_date = models.DateField()
     isbn = models.CharField(
         'ISBN',
@@ -21,6 +38,16 @@ class Book(models.Model):
         on_delete=models.SET_NULL,
         null=True,
     )
+    time_create = models.DateTimeField(
+        'Дата добавления книги',
+        default=timezone.now,
+        db_index=True
+    )
+    time_update = models.DateTimeField(
+        'Дата обновления информации о книге',
+        auto_now=True,
+        db_index=True
+    )
 
     class Meta:
         ordering = ('name',)
@@ -31,17 +58,23 @@ class Book(models.Model):
         return self.name
 
 
-class Author(models.Model):
-    name = models.CharField(
-        max_length=150,
+class AuthorsBook(models.Model):
+    author = models.ForeignKey(
+        Author,
+        on_delete=models.CASCADE,
+        verbose_name='Автор'
     )
+    book = models.ForeignKey(
+        Book,
+        on_delete=models.CASCADE,
+        verbose_name='Книга')
 
     class Meta:
-        verbose_name = 'Автор'
-        verbose_name_plural = 'Авторы'
+        verbose_name = 'Авторы книги'
+        verbose_name_plural = 'Авторы книг'
 
     def __str__(self):
-        return self.name
+        return f'{self.author} {self.book}'
 
 
 class Genre(models.Model):

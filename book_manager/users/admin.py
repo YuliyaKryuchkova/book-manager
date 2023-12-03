@@ -35,12 +35,14 @@ class UserAdmin(admin.ModelAdmin):
         'email',
         'first_name',
         'last_name',
+        'time_create',
     )
     search_fields = (
         'email',
         'username',
         'first_name',
         'last_name',
+        'time_create',
     )
     list_filter = (
         'email',

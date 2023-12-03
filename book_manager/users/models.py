@@ -16,6 +16,11 @@ class User(AbstractUser):
         'Фамилия',
         max_length=150
     )
+    time_create = models.DateTimeField(
+        'Дата регистрации пользователя',
+        auto_now_add=True,
+        db_index=True
+    )
 
     class Meta:
         verbose_name = 'Пользователь'
