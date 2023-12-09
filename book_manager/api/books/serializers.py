@@ -24,9 +24,10 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 
 class BookListSerializer(serializers.ModelSerializer):
-    genre = GenreSerializer()
+    genre = GenreSerializer(read_only=True)
     authors = AuthorSerializer(
         many=True,
+        read_only=True
     )
 
     class Meta:
@@ -42,9 +43,10 @@ class BookListSerializer(serializers.ModelSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
-    genre = GenreSerializer()
+    genre = GenreSerializer(read_only=True)
     authors = AuthorSerializer(
         many=True,
+        read_only=True
     )
 
     class Meta:
