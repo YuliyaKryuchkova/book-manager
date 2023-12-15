@@ -15,10 +15,12 @@
 
 ```
 https://github.com/YuliyaKryuchkova/book-manager```
+```
 
 * Cоздать и активировать виртуальное окружение:
 
 * Если у вас Linux/macOS
+
 
 ```
 python3 -m venv env
