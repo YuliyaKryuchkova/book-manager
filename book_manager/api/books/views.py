@@ -15,8 +15,11 @@ class GenreViewSet(ReadOnlyModelViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
     permission_classes = (IsAuthorOrReadOnly, )
-    ordered_queryset = queryset.order_by('name')
     pagination_class = LimitPageNumberPagination
+
+    def get_queryset(self):
+        ordered_queryset = super().get_queryset().order_by('name')
+        return ordered_queryset
 
 
 class AuthorViewSet(ReadOnlyModelViewSet):
