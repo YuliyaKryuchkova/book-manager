@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 
@@ -88,3 +89,9 @@ class Genre(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        existing_genre = Genre.objects.filter(name=self.name)
+        if existing_genre.exists():
+            raise ValidationError('Такой жанр уже существует')
+        super(Genre, self).save(*args, **kwargs)

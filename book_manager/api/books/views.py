@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
@@ -6,21 +7,32 @@ from .serializers import GenreSerializer, AuthorSerializer, BookListSerializer, 
     BookSerializer
 
 from books.models import Author, Book, Genre
+from api.permissions import IsAuthorOrReadOnly
+from api.pagination import LimitPageNumberPagination
 
 
 class GenreViewSet(ReadOnlyModelViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
+    permission_classes = (IsAuthorOrReadOnly, )
+    ordered_queryset = queryset.order_by('name')
+    pagination_class = LimitPageNumberPagination
 
 
 class AuthorViewSet(ReadOnlyModelViewSet):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+    permission_classes = (IsAuthorOrReadOnly, )
+    ordered_queryset = queryset.order_by('name')
+    pagination_class = LimitPageNumberPagination
 
 
 class BookViewSet(ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookListSerializer
+    permission_classes = (IsAuthorOrReadOnly, )
+    ordered_queryset = queryset.order_by('name')
+    pagination_class = LimitPageNumberPagination
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()

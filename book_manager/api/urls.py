@@ -2,7 +2,7 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 from .books.views import GenreViewSet, AuthorViewSet, BookViewSet
-from .users.views import CustomDjoserUserViewSet
+from .users.views import CustomDjoserUserViewSet, CustomPasswordResetView
 
 app_name = 'api'
 
@@ -43,4 +43,7 @@ urlpatterns = [
         'auth/',
         include('djoser.urls.authtoken')
     ),
+    path('users/reset-password/',
+         CustomPasswordResetView.as_view(),
+         name='password_reset'),
 ]

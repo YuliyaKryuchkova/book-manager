@@ -1,10 +1,10 @@
-from django.contrib.auth import get_user_model
-from celery import shared_task
-from django.core.mail import send_mail
-
-from book_manager.settings import EMAIL_HOST_USER, EMAIL_DOMAIN
-
-User = get_user_model()
+# from django.contrib.auth import get_user_model
+# from celery import shared_task
+# from django.core.mail import send_mail
+#
+# from book_manager.settings import EMAIL_HOST_USER, EMAIL_DOMAIN
+#
+# User = get_user_model()
 
 
 # @shared_task
@@ -14,13 +14,14 @@ User = get_user_model()
 #     from_email = f"{EMAIL_HOST_USER}@{EMAIL_DOMAIN}"
 #     recipient_list = [username_email]
 #     send_mail(subject, message, from_email, recipient_list)
-@shared_task
-def send_welcome_email():
-    send_mail(
-        'Приветствуем вас на нашем сайте',
-        f"{EMAIL_HOST_USER}@{EMAIL_DOMAIN}",
-        [f"{EMAIL_HOST_USER}@{EMAIL_DOMAIN}"]
-    )
+
+# @shared_task
+# def send_welcome_email():
+#     send_mail(
+#         'Приветствуем вас на нашем сайте',
+#         f"{EMAIL_HOST_USER}@{EMAIL_DOMAIN}",
+#         [f"{EMAIL_HOST_USER}@{EMAIL_DOMAIN}"]
+#     )
 
 
 # @shared_task()

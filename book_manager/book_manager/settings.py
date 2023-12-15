@@ -29,16 +29,16 @@ SECRET_KEY = 'django-insecure-8rgkwh-jy_f4x05=u50os3=m@2s$*9%yp7%^dbt+a%u3#74bav
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*']
 
 # Celery Configuration Options
-CELERY_TIMEZONE = "Europe/Moscow"
-CELERY_TASK_TRACK_STARTED = True
-CELERY_TASK_TIME_LIMIT = 30 * 60
-CELERY_BROKER_URL = 'redis://redis:6379/0'
+# CELERY_TIMEZONE = "Europe/Moscow"
+# CELERY_TASK_TRACK_STARTED = True
+# CELERY_TASK_TIME_LIMIT = 30 * 60
+# CELERY_BROKER_URL = 'redis://redis:6379/0'
 # CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
+# CELERY_ACCEPT_CONTENT = ['json']
+# CELERY_TASK_SERIALIZER = 'json'
 
 # Application definition
 
@@ -55,8 +55,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'django_filters',
-    'django_celery_beat',
-    'django_celery_results',
+    # 'django_celery_beat',
+    # 'django_celery_results',
 
     'users',
     'books',
@@ -156,6 +156,8 @@ REST_FRAMEWORK = {
 
 DJOSER = {
     'LOGIN_FIELD': 'email',
+    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
+
     'SERIALIZERS': {
         'user_create': 'api.users.serializers.CustomUserCreateSerializer',
         'user': 'api.users.serializers.CustomUserSerializer',
@@ -165,20 +167,6 @@ DJOSER = {
 }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-#
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
-# EMAIL_DOMAIN = 'yandex.ru'
-# EMAIL_HOST = 'smtp.yandex.ru'
-# EMAIL_PORT = 465
-# EMAIL_HOST_USER = 'ju1i1234'
-# EMAIL_HOST_PASSWORD = 'nwogltpqmgsggepo'
-# EMAIL_USE_SSL = True
-# EMAIL_USE_TLS = False
-#
-# EMAIL_SERVER = EMAIL_HOST_USER
-# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-# EMAIL_ADMIN = ['kissanni@mail.ru']
 
 
 EMAIL_BACKEND = env("EMAIL_BACKEND")

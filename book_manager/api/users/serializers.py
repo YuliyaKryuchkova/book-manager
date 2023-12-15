@@ -7,6 +7,8 @@ User = get_user_model()
 
 
 class CustomUserCreateSerializer(UserCreateSerializer):
+    confirm_password = serializers.CharField(write_only=True)
+
     class Meta:
         model = User
         fields = (
@@ -15,7 +17,8 @@ class CustomUserCreateSerializer(UserCreateSerializer):
             'username',
             'first_name',
             'last_name',
-            'password'
+            'password',
+            'confirm_password'
         )
 
     def validate_username(self, value):
